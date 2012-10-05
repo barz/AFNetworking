@@ -41,6 +41,9 @@
 #import <netdb.h>
 #endif
 
+NSString * AFPercentEscapedQueryStringPairMemberFromStringWithEncoding(NSString *string, NSStringEncoding encoding); // Hsoi 05-Oct-2012 - added prototype to quiet the compiler.
+
+
 @interface AFMultipartFormData : NSObject <AFMultipartFormData>
 
 - (id)initWithURLRequest:(NSMutableURLRequest *)request 
