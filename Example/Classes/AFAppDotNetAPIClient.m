@@ -1,4 +1,4 @@
-// AFTwitterAPIClient.h
+// AFAppDotNetAPIClient.h
 //
 // Copyright (c) 2012 Mattt Thompson (http://mattt.me/)
 // 
@@ -20,19 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "AFTwitterAPIClient.h"
+#import "AFAppDotNetAPIClient.h"
 
 #import "AFJSONRequestOperation.h"
 
-static NSString * const kAFTwitterAPIBaseURLString = @"http://api.twitter.com/1/";
+static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.net/";
 
-@implementation AFTwitterAPIClient
+@implementation AFAppDotNetAPIClient
 
-+ (AFTwitterAPIClient *)sharedClient {
-    static AFTwitterAPIClient *_sharedClient = nil;
++ (AFAppDotNetAPIClient *)sharedClient {
+    static AFAppDotNetAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[AFTwitterAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kAFTwitterAPIBaseURLString]];
+        _sharedClient = [[AFAppDotNetAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kAFAppDotNetAPIBaseURLString]];
     });
     
     return _sharedClient;
@@ -48,6 +48,11 @@ static NSString * const kAFTwitterAPIBaseURLString = @"http://api.twitter.com/1/
     
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
 	[self setDefaultHeader:@"Accept" value:@"application/json"];
+
+    // By default, the example ships with SSL pinning enabled for the app.net API pinned against the public key of adn.cer file included with the example. In order to make it easier for developers who are new to AFNetworking, SSL pinning is automatically disabled if the base URL has been changed. This will allow developers to hack around with the example, without getting tripped up by SSL pinning.
+    if ([[url scheme] isEqualToString:@"https"] && [[url host] isEqualToString:@"alpha-api.app.net"]) {
+        [self setDefaultSSLPinningMode:AFSSLPinningModePublicKey];
+    }
     
     return self;
 }

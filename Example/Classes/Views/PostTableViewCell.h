@@ -1,6 +1,6 @@
-// AFJSONUtilities.h
+// TweetTableViewCell.h
 //
-// Copyright (c) 2011 Gowalla (http://gowalla.com/)
+// Copyright (c) 2012 Mattt Thompson (http://mattt.me/)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-extern NSData * AFJSONEncode(id object, NSError **error);
-extern id AFJSONDecode(NSData *data, NSError **error);
+@class Post;
+
+@interface PostTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) Post *post;
+
++ (CGFloat)heightForCellWithPost:(Post *)post;
+
+@end
